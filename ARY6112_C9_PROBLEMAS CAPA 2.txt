@@ -1,0 +1,168 @@
+TROUBLESHOOTING
+-------------------
+
+
+Clase anterior
+-------------------
+External BGP
+Internal BGP
+
+
+Objetivos
+-------------------
+Capa 2
+
+
+Protocolos y tecnologías de Capa 2
+----------------------------------
+Problemas relacionados con Switches de capa 2 y Switches Capa 3.
+No se revisan Routers
+Problemas se enfocan en las redes LAN
+Redes conmutadas
+
+VLAN
+PUERTOS DE ACCESO
+PUERTOS TRONCALES
+INTERFACES VLAN
+SUBINTERFACES
+DHCP EN Switches
+PROTOCOLO CDP
+PROTOCOLO SPANNING.TREE
+SEGURIDAD DE SPANNING-TREE
+SEGURIDAD DE PUERTO
+DHCP SNOOPING
+ARP INSPECTION
+LIMITE DE TORMENTAS BROADCAST
+
+Lista de problemas Capa 2
+----------------------------
+La vlan no esta creada
+La vlan esta creada pero desactivada
+La vlan no esta agregada al puerto de acceso
+La vlan no esta agregada al puerto troncal
+La vlan no es bloqueada por spanning-tree
+La vlan de Voz no esta configurada
+La vlan de Voz esta mal asignada
+El puerto físico esta apagado
+El "speed" no coincide entre puertos
+El "duplex half" siempre debe ser "duplex full" "duplex auto"
+Protocolo CDP desactivado en troncal
+Protocolo CDP desactivado en puerto Voz
+CDP desactivado de manera globla "no cdp run"
+"sw trunk encap dot" no aplicado
+Modo trunk en un puerto troncal
+VLAN nativa no esta creada
+VLAN nativa no esta agregada troncal
+VLAN nativa esta mal asignada "mismatch native vlan"
+Una VLAN no esta agregada al troncal "allowed vlan add"
+SVI: No configurada "No hay ping al switch"
+SVI: Mal configurada con dirección IP
+SVI: apagada "shutdown"
+Puerta de enlace del Swtich mal asignado
+Puerta de enlace del Swtich ausente
+DHCP SW: Exclusión muy extensa
+DHCP SW: Network mal declarada
+DHCP SW: dns mal declarado
+DHCP SW: puerta de enlace mal declarada
+DHCP SW: Ausencia de DHCP
+DHCP SW: Opción 150 mal asignada
+DHCP SW: ip helper-address IP-DEL-SERVER-DHCP
+DHCP SNOOPING: Troncales deben ser "trust"
+PORT-SEC: Deshabilitada "sw port-security"
+PORT-SEC: Máximum limitado a 1
+PORT-SEC: MAC mal asignada manualmente
+PORT-SEC: MAC asignada manualmente y con duplicidad
+PORT-SEC: MAC genera que se alcance el maximo
+storm-control: Debe ser de minimo 1%, 0.1 > Mal
+STP BPDU Guard: No debe estar en trunk
+STP ROOT Guard: No debe estar en trunk
+----------
+40 Tickets
+
+
+
+
+
+
+vlan 10
+name NOMBRE
+vlan 20
+name VOICE
+!
+int fa0/1
+sw mode access
+sw acc vlan 10
+sw voice vlan 20
+spann portfast
+speed auto
+duplex auto
+no cdp enable
+sw port-security
+sw port-security max 1
+sw port-security viol shutdown | restrict | protect
+sw port-security mac-address sticky
+sw port-security mac-address 0001.0002.0003
+sw port-security aging time 10
+storm-control broadcast level 5
+
+
+
+!
+int fa0/24
+sw trunk encap dot
+sw mode trunk
+sw trunk native vlan 99
+sw trunk allowed vlan 10,20
+ip dhcp snooping trust
+!
+int vlan 100
+no shut
+ip add 10.0.100.10 255.255.255.0
+!
+ip default-gateway 10.0.100.1
+
+ip dhcp exclude 10.0.100.1 10.0.100.50
+!
+ip dhcp pool NOMBRE
+network 10.0.100.0  255.255.255.0
+default 10.0.100.1
+dns 8.8.8.8
+option 150 ip  IP-PBX
+!
+
+***********  BREAK   *************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
